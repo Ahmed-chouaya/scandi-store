@@ -1,41 +1,20 @@
 import React, { Component } from 'react'
 import { Context } from '../Context'
 
-export default class CartItem extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            current: 0,
-            photo: this.props.item.gallery
-        }
-    }
-    
-    leng = this.props.item.gallery.length
-
-    nextSlide() {
-        this.setState(prev => ({
-            ...prev,
-            current: prev.current === this.leng - 1 ? 0 : prev.current + 1
-        }))
-    }
-
-    prevSlide() {
-        this.setState(prev => ({
-            ...prev,
-            current: prev.current === 0 ? this.leng - 1 : prev.current - 1
-        }))
-    }
-
+export default class ProductPage extends Component {
   render() {
     return (
-        <div>
-        <hr />
-            <div className='cart-product-page'>
-                <div className='cart-product'>
-                    <h1 className='brand-name'>{this.props.item.brand}</h1>
-                    <h1 className='item-name'>{this.props.item.name}</h1>
-                    <h1 className='item-price'>{this.props.item.prices[this.context.num].currency.symbol} {this.props.item.prices[this.context.num].amount}</h1>
-                    {this.props.item.attributes.map((att, i) => (
+      <div className='pdp'>
+        <div className='pdp-images'>
+            <img className='pdp-image' src={this.props.product.gallery[1]} alt="" />
+            <img className='pdp-image' src={this.props.product.gallery[2]} alt="" />
+            <img className='pdp-image' src={this.props.product.gallery[3]} alt="" />
+        </div>
+        <img className='main-pdp-image' src={this.props.product.gallery[0]} alt="" />
+        <div className='pdp-main'>
+        <h1 className='brand-name'>{this.props.product.brand}</h1>
+                    <h1 className='item-name'>{this.props.product.name}</h1>
+                    {this.props.product.attributes.map((att, i) => (
                         <div className='item-attributes' key={i}>
                             <h3 className='att-name'>{att.name + ":"}</h3>
                             {att.name === "Size" && <div className='input' id={"group"+i}>
@@ -70,23 +49,15 @@ export default class CartItem extends Component {
                             </div>}
                         </div>
                     ))}
-                </div>
-                <div className='cart-product-image'>
-                    <div className='cart-product-button'>
-                        <button onClick={() => {this.context.handleCartItem(this.props.item)
-                        this.props.rerender()}} className='cart-button'>+</button>
-                        <h1 className='counter'>{this.props.item.cartQty}</h1>
-                        <button onClick={() => {this.context.minusItem(this.props.item)
-                        this.props.rerender()}} className='cart-button'>-</button>
-                    </div>
-                        <img className='cart-page-image' style={{width: "350px"}} src={this.state.photo[this.state.current]} alt="" />
-                    {this.leng > 1 && <button onClick={() => this.prevSlide()} className='left-arrow'>{"<"}</button>}
-                    {this.leng > 1 &&<button onClick={() => this.nextSlide()} className='right-arrow'>{">"}</button>}
-                </div>
-            </div>
+
+                    <h1 className='pdp-price'>Price:</h1>
+                    <h1 className='item-price'>{this.props.product.prices[this.context.num].currency.symbol} {this.props.product.prices[this.context.num].amount}</h1>
+                    <button onClick={() => this.context.handleCartItem(this.props.product)} className='pdp-button'>ADD TO CART</button>
+                    <p className='pdp-add-to-cart' dangerouslySetInnerHTML={{__html: this.props.product.description}}></p>
+        </div>
       </div>
     )
   }
 }
 
-CartItem.contextType = Context
+ProductPage.contextType = Context

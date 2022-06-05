@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Fetch_CATEGORIES_LINKS, Fetch_CURRENCY } from "./components/queries"
+import { Fetch_CATEGORIES, Fetch_CATEGORIES_LINKS, Fetch_CURRENCY } from "./components/queries"
 const Context = React.createContext()
  
 class ContextProvider extends Component {
@@ -12,15 +12,25 @@ class ContextProvider extends Component {
           num: 0,
           cartItem: [],
           cartTotalQty: 0,
-          cartTotalAmount: 0
+          cartTotalAmount: 0,
+          product: []
         }
         this.handleCurrency = this.handleCurrency.bind(this)
         this.priceArr = this.priceArr.bind(this)
         this.handleCartItem = this.handleCartItem.bind(this)
         this.minusItem = this.minusItem.bind(this)
         this.getTotal = this.getTotal.bind(this)
+        this.handleOrder = this.handleOrder.bind(this)
     }
 
+    handleOrder() {
+        this.setState(prev => ({
+            ...prev,
+            cartItem: [],
+            cartTotalQty: 0,
+            cartTotalAmount: 0
+        }))
+    }
 
     getTotal() {
         let { total, quantity } = this.state.cartItem.reduce((cartTotal, cartItems) => {
@@ -115,6 +125,11 @@ class ContextProvider extends Component {
             ...prev,
             currencies: r.data.currencies
         })))
+        Fetch_CATEGORIES("all")
+        .then(res => this.setState(prev => ({
+        ...prev,
+        product : res.data.category.products
+        })))
       }
 
     render(){
@@ -130,7 +145,9 @@ class ContextProvider extends Component {
                 minusItem: this.minusItem,
                 getTotal: this.getTotal,
                 cartTotalQty: this.state.cartTotalQty,
-                cartTotalAmount: this.state.cartTotalAmount
+                cartTotalAmount: this.state.cartTotalAmount,
+                product: this.state.product,
+                handleOrder: this.handleOrder
             }}>
                 {this.props.children}
             </Context.Provider>

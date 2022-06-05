@@ -364,6 +364,12 @@ label {
 }
 
 .order-button {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -373,8 +379,11 @@ label {
 
   width: 279px;
   height: 43px;
+  cursor: pointer;
 
-  color: #FFFFFF;
+  
+  border: #5ECE7B;
+  color: #fff;
   background: #5ECE7B;
 }
 
@@ -404,3 +413,85 @@ label {
   cursor: pointer;
 }
 
+/* Product Page
+=================================*/
+
+.pdp {
+  padding: 100px;
+  display: flex;
+}
+
+.pdp-images {
+  display: flex;
+  flex-direction: column;
+  margin-right: 50px;
+}
+
+.pdp-image {
+  width: 100px;
+  margin-bottom: 24px;
+}
+
+.main-pdp-image {
+  width: 500px;
+  max-height: 600px;
+}
+
+.pdp-main {
+  margin-left: 50px;
+}
+
+.pdp-price {
+  margin-top: 36px;
+  margin-bottom: 15px;
+
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+
+  /* identical to box height, or 100% */
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #1D1F22;
+}
+
+.pdp-add-to-cart {
+  margin-top: 40px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 159.96%;
+
+  /* or 26px */
+
+  /* --c-text */
+  color: #1D1F22;
+}
+
+.pdp-button {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 32px;
+
+  width: 292px;
+  height: 52px;
+  cursor: pointer;
+
+
+  border: #5ECE7B;
+  color: #fff;
+  background: #5ECE7B;
+}

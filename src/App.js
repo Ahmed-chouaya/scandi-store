@@ -8,6 +8,8 @@ import All from "./components/categories/All";
 import Tech from "./components/categories/Tech";
 import Clothes from "./components/categories/Clothes";
 import Cart from "./components/Cart";
+import ProductPage from "./components/ProductPage"
+import { Context } from "./Context";
 
 class App extends Component {
   constructor(props){
@@ -26,14 +28,17 @@ handleCategory = (catt) => {
       <div className="App">
         <Navbar handleCategory={this.handleCategory} />
         <Routes>
-          <Route path="all" element={<All />} />
-          <Route path="tech" element={<Tech />} />
-          <Route path="clothes" element={<Clothes />} />
+          <Route path="all" element={<All handleCategory={this.handleCategory}/>} />
+          <Route path="tech" element={<Tech handleCategory={this.handleCategory}/>} />
+          <Route path="clothes" element={<Clothes handleCategory={this.handleCategory}/>} />
           <Route path="cart" element={<Cart />} />
+          {this.context.product.map(prod => <Route key={prod.id} path={this.state.cat + "/" + prod.id} element={<ProductPage product={prod}/>} />)}
         </Routes>
       </div>
     );
   }
 }
+
+App.contextType = Context
 
 export default App;

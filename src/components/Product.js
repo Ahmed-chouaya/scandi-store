@@ -30,7 +30,7 @@ export default class Product extends Component {
       <div className='product'>
         <h1 className='cat-name'>{this.state.category}</h1>
         <div className='product-page'>
-            {this.state.product.map(prod => <ProductCard product={prod} inStock={prod.inStock} key={prod.id} price={prod.prices[this.context.num]} image={prod.gallery[0]} name={prod.name}/>)}
+            {this.state.product.map(prod => <ProductCard product={prod} category={this.state.category} inStock={prod.inStock} key={prod.id} price={prod.prices[this.context.num]} image={prod.gallery[0]} name={prod.name}/>)}
         </div>
       </div> 
     )
