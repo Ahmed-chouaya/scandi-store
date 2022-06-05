@@ -1,13 +1,406 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
+/* Navbar
+==============================*/
+.nav-containner {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.nav-categories {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
 }
+
+.nav-categories li {
+  margin: 10px;
+  cursor: pointer;
+}
+
+
+.nav-categories li:hover {
+  color: #5ECE7B;
+  border-bottom: solid #5ECE7B;
+  font-weight: 600;
+  border-bottom-width: 2px;
+  padding-bottom: 30px;
+}
+
+.logo {
+  text-align: center;
+  justify-content: center;
+  margin-right: 150px;
+  margin-top: 10.5px;
+  margin-bottom: 30px;
+}
+
+.nav-cart {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.nav-cart select {
+  border: none;
+  outline: none;
+  background: none;
+  width: 35px;
+  text-align: center;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.cart {
+  cursor: pointer;
+}
+
+/* Product
+==============================*/
+
+.cat-name, .cart-name {
+  margin-left: 90px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 160%;
+}
+
+.product-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 100px;
+  grid-column-gap: 20px;
+  grid-row-gap: 100px;
+}
+
+.product-card {
+  width: 386px;
+  height: 455px;
+  background: #FFFFFF;
+}
+
+.card-ele {
+  position: relative;
+  margin: 15px;
+}
+
+.product-card:hover {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+}
+
+.product-name {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1D1F22;
+  margin-top: 24px;
+}
+
+.product-price {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+}
+
+.add-to-cart {
+  position: absolute;
+  bottom: 43px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.outOfStock {
+  position: absolute;
+  left: 25.42%;
+  right: 25.71%;
+  top: 44.24%;
+  bottom: 43.94%;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 160%;
+  /* identical to box height, or 38px */
+
+  display: flex;
+  align-items: center;
+
+  color: #8D8F9A;
+}
+
+.stockOut {
+  color: #8D8F9A;
+}
+
+/* Cart
+=================================*/
+
+.cart-page {
+  padding: 100px;
+}
+
+.brand-name {
+  margin-top: 24px;
+  margin-bottom: 16px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
+
+  /* identical to box height, or 90% */
+  display: flex;
+  align-items: center;
+
+  color: #1D1F22;
+}
+
+hr {
+  color: #E5E5E5;
+  margin-top: 15px;
+}
+
+.item-name {
+  margin-bottom: 16px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
+
+  /* identical to box height, or 90% */
+  display: flex;
+  align-items: center;
+
+  color: #1D1F22;
+}
+
+.item-price {
+  margin-bottom: 16px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
+
+  /* identical to box height, or 90% */
+  display: flex;
+  align-items: center;
+
+  color: #1D1F22;
+}
+
+.cart-product-page {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-product-image {
+  display: flex;
+  flex-direction: row;
+  margin: 24px;
+}
+
+.cart-product-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-button {
+  margin: 10px;
+  width: 45px;
+  height: 45px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+
+  border: 1px solid #1D1F22;
+}
+
+.counter {
+  margin-left: 24px;
+
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 160%;
+
+  /* or 38px */
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #1D1F22;
+}
+
+input[type="radio"] {
+  opacity: 0;
+  position: fixed;
+  width: 0;
+}
+
+label {
+  margin-bottom: 10px;
+  margin-right: 15px;
+  width: auto;
+  min-width: 100px;
+  height: 35px;
+
+  background: #FFFFFF;
+  border: 1px solid #1D1F22;
+  padding: 10px 20px;
+
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+
+  /* identical to box height, or 112% */
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.05em;
+
+  color: #1D1F22;
+
+  /* identical to box height */
+  cursor: pointer;
+}
+
+.input {
+  display: inline;
+}
+
+.att-name {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+
+  /* identical to box height, or 100% */
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #1D1F22;
+
+
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.input input[type="radio"]:checked + label {
+  background: #1D1F22;
+  border: 1px solid #1D1F22;
+  color: white;
+}
+
+.order {
+  margin-top: 32px;
+}
+
+.tax {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+
+
+  color: #1D1F22;
+}
+
+.quantity {
+  margin-top: 8px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+
+
+  color: #1D1F22;
+}
+
+.total {
+  margin-top: 8px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+
+
+  color: #1D1F22;
+}
+
+.order-button {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 32px;
+
+  width: 279px;
+  height: 43px;
+
+  color: #FFFFFF;
+  background: #5ECE7B;
+}
+
+.left-arrow {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  top: 85%;
+  right: 18%;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.73);
+  border: #000;
+  cursor: pointer;
+}
+
+.right-arrow {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  top: 85%;
+  right: 15%;
+
+  color: #fff;
+  background: rgba(0, 0, 0, 0.73);
+  border: #000;
+  cursor: pointer;
+}
+
