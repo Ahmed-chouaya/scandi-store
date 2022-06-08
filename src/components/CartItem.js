@@ -38,33 +38,33 @@ export default class CartItem extends Component {
                     {this.props.item.attributes.map((att, i) => (
                         <div className='item-attributes' key={i}>
                             <h3 className='att-name'>{att.name + ":"}</h3>
-                            {att.name === "Size" && <div className='input' id={"group"+i}>
+                            {att.name === "Size" && <div className='input' id={this.props.item.name + att.name}>
                                 {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group"+i} id={value+id} type="radio" />
+                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
                                     <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
                                 </div>)}
                             </div>}
-                            {att.name === "Color" && <div id={"group2"}>
+                            {att.name === "Color" && <div id={this.props.item.name + att.name}>
                                 {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group2"} id={value+id} type="radio" />
+                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
                                     <label className={att.name + "Label"} htmlFor={value+id} style={{backgroundColor: `${value.displayValue}`}} ></label>
                                 </div>)}
                             </div>}
-                            {att.name === "Capacity" && <div id={"group3"}>
+                            {att.name === "Capacity" && <div id={this.props.item.name + att.name}>
                                 {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group3"} id={value+id} type="radio" />
+                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
                                     <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
                                 </div>)}
                             </div>}
-                            {att.name === "With USB 3 ports" && <div id={"group4"}>
+                            {att.name === "With USB 3 ports" && <div id={this.props.item.name + att.name}>
                                 {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group4"} id={value+id} type="radio" />
+                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
                                     <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
                                 </div>)}
                             </div>}
-                            {att.name === "Touch ID in keyboard" && <div id={"group5"}>
+                            {att.name === "Touch ID in keyboard" && <div id={this.props.item.name + att.name}>
                                 {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group5"} id={value+id} type="radio" />
+                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
                                     <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
                                 </div>)}
                             </div>}

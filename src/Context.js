@@ -32,6 +32,27 @@ class ContextProvider extends Component {
         }))
     }
 
+    
+    
+    minusItem(item) {
+        const itemIndex = this.state.cartItem.findIndex((itmm) => itmm.id === item.id);
+        if (this.state.cartItem[itemIndex].cartQty >= 1) {
+            this.state.cartItem[itemIndex].cartQty -= 1
+        }
+        this.getTotal()
+    }
+    
+    
+    handleCartItem(item) {
+        const Items = {...item, cartQty: 1}
+        const itemIndex = this.state.cartItem.findIndex((itm) => itm.id === item.id);
+        if (itemIndex >= 0) {
+            this.state.cartItem[itemIndex].cartQty += 1
+        }else {
+            this.state.cartItem = [...this.state.cartItem, Items]
+        }
+        this.getTotal()
+    }
     getTotal() {
         let { total, quantity } = this.state.cartItem.reduce((cartTotal, cartItems) => {
             const { prices, cartQty } = cartItems;
@@ -51,36 +72,6 @@ class ContextProvider extends Component {
             cartTotalQty: quantity,
             cartTotalAmount: total
         }))
-    }
-
-
-    minusItem(item) {
-        const itemIndex = this.state.cartItem.findIndex((itmm) => itmm.id === item.id);
-        if (this.state.cartItem[itemIndex].cartQty >= 1) {
-            this.state.cartItem[itemIndex].cartQty -= 1
-        }else {
-            const Items = {...item, cartQty: 1}
-
-            this.setState(prev => ({
-                ...prev,
-                cartItem: [...this.state.cartItem, Items]
-            }))
-        }
-    }
-    
-
-    handleCartItem(item) {
-        const itemIndex = this.state.cartItem.findIndex((itm) => itm.id === item.id);
-        if (itemIndex >= 0) {
-            this.state.cartItem[itemIndex].cartQty += 1
-        }else {
-            const Items = {...item, cartQty: 1}
-
-            this.setState(prev => ({
-                ...prev,
-                cartItem: [...this.state.cartItem, Items]
-            }))
-        }
     }
 
     priceArr(cur) {
@@ -147,7 +138,7 @@ class ContextProvider extends Component {
                 cartTotalQty: this.state.cartTotalQty,
                 cartTotalAmount: this.state.cartTotalAmount,
                 product: this.state.product,
-                handleOrder: this.handleOrder
+                handleOrder: this.handleOrder,
             }}>
                 {this.props.children}
             </Context.Provider>

@@ -4,8 +4,18 @@ import { Context } from '../Context';
 
 
 class Navbar extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      qty: 0
+    }
+  }
+
+  static contextType = Context
+  
 
   render() {
+    console.log(this.context.cartTotalQty)
     return (
       <div className='nav-containner'>
           <ul className='nav-categories'>
@@ -16,13 +26,13 @@ class Navbar extends Component {
             <select value={this.context.currency} onChange={this.context.handleCurrency}>
                 {this.context.currencies.map(currency => <option key={currency.label} value={currency.label}>{`${currency.symbol} ${currency.label}`}</option>)}
             </select>
-            <Link to={"cart"}><img className='cart' src="./Vector.svg" alt="" /></Link>
+            <img onClick={() => this.props.handleMiniCart()} className='cart' src="./Vector.svg" alt="" />
+            <h1 className='navbar-qty'>{this.context.cartTotalQty}</h1>
           </div>
       </div>
     )
   }
 }
 
-Navbar.contextType = Context
 
 export default Navbar
