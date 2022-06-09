@@ -2,15 +2,28 @@ import React, { Component } from 'react'
 import { Context } from '../Context'
 
 export default class ProductPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            image: this.props.product.gallery[0]
+        }
+        this.handleImage = this.handleImage.bind(this)
+    }
+
+    handleImage(img) {
+        this.setState({image: img})
+    }
+
+
   render() {
     return (
       <div className='pdp'>
         <div className='pdp-images'>
-            <img className='pdp-image' src={this.props.product.gallery[1]} alt="" />
-            <img className='pdp-image' src={this.props.product.gallery[2]} alt="" />
-            <img className='pdp-image' src={this.props.product.gallery[3]} alt="" />
+            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[0])} className='pdp-image' src={this.props.product.gallery[0]} alt="" />
+            <img style={{cursor: "pointer"}}  onClick={() => this.handleImage(this.props.product.gallery[1])} className='pdp-image' src={this.props.product.gallery[1]} alt="" />
+            <img style={{cursor: "pointer"}}  onClick={() => this.handleImage(this.props.product.gallery[2])} className='pdp-image' src={this.props.product.gallery[2]} alt="" />
         </div>
-        <img className='main-pdp-image' src={this.props.product.gallery[0]} alt="" />
+        <img className='main-pdp-image' src={this.state.image} alt="" />
         <div className='pdp-main'>
         <h1 className='brand-name'>{this.props.product.brand}</h1>
                     <h1 className='item-name'>{this.props.product.name}</h1>

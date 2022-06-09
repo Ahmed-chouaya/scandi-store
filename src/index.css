@@ -462,7 +462,7 @@ input[type="radio"] {
 
 .main-pdp-image {
   width: 500px;
-  max-height: 600px;
+  height: auto;
 }
 
 .pdp-main {

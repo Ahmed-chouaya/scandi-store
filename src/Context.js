@@ -13,7 +13,8 @@ class ContextProvider extends Component {
           cartItem: [],
           cartTotalQty: 0,
           cartTotalAmount: 0,
-          product: []
+          product: [],
+          toglleMiniCart: false
         }
         this.handleCurrency = this.handleCurrency.bind(this)
         this.priceArr = this.priceArr.bind(this)
@@ -21,14 +22,23 @@ class ContextProvider extends Component {
         this.minusItem = this.minusItem.bind(this)
         this.getTotal = this.getTotal.bind(this)
         this.handleOrder = this.handleOrder.bind(this)
+        this.handleMiniCart = this.handleMiniCart.bind(this)
     }
+
+    handleMiniCart() {
+        this.setState(prev => ({
+            ...prev,
+            toglleMiniCart: !prev.toglleMiniCart
+        }))
+      }
 
     handleOrder() {
         this.setState(prev => ({
             ...prev,
             cartItem: [],
             cartTotalQty: 0,
-            cartTotalAmount: 0
+            cartTotalAmount: 0,
+            toglleMiniCart: false
         }))
     }
 
@@ -139,6 +149,8 @@ class ContextProvider extends Component {
                 cartTotalAmount: this.state.cartTotalAmount,
                 product: this.state.product,
                 handleOrder: this.handleOrder,
+                toglleMiniCart: this.state.toglleMiniCart,
+                handleMiniCart: this.handleMiniCart
             }}>
                 {this.props.children}
             </Context.Provider>

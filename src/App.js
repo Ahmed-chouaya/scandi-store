@@ -17,16 +17,7 @@ class App extends Component {
     super(props)
     this.state = {
         cat:"all",
-        toglleMiniCart: false
     }
-    this.handleMiniCart = this.handleMiniCart.bind(this)
-}
-
-handleMiniCart() {
-  this.setState(prev => ({
-      ...prev,
-      toglleMiniCart: !prev.toglleMiniCart
-  }))
 }
 
 handleCategory = (catt) => {
@@ -39,9 +30,9 @@ handleCategory = (catt) => {
   render() {
     return (
       <div className="App">
-        <Navbar handleMiniCart={this.handleMiniCart} handleCategory={this.handleCategory} />
-        {this.state.toglleMiniCart && <MiniCart />}
-        <div className={this.state.toglleMiniCart ? "opacity" : ""}>
+        <Navbar  handleCategory={this.handleCategory} />
+        {this.context.toglleMiniCart && <MiniCart />}
+        <div className={this.context.toglleMiniCart ? "opacity" : ""}>
         <Routes >
           <Route path="all" element={<All handleCategory={this.handleCategory}/>} />
           <Route path="tech" element={<Tech handleCategory={this.handleCategory}/>} />
