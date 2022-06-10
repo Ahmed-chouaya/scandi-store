@@ -15,11 +15,10 @@ class Navbar extends Component {
   
 
   render() {
-    console.log(this.context.cartTotalQty)
     return (
       <div className='nav-containner'>
           <ul className='nav-categories'>
-              {this.context.cat.map(cat => (<li key={cat.name} ><Link key={cat.name} style={{ textDecoration: 'none', color: "#5ECE7B", padding: "10px",paddingBottom: "30px"}} to={cat.name}>{cat.name.toUpperCase()}</Link></li>))}
+              {this.context.cat.map(cat => (<li key={cat.name} ><Link className='nav-link' key={cat.name} to={cat.name}>{cat.name.toUpperCase()}</Link></li>))}
           </ul>
           <img className='logo' src="./Group.svg" alt="" />
           <div className='nav-cart'>

@@ -20,8 +20,8 @@ export default class ProductPage extends Component {
       <div className='pdp'>
         <div className='pdp-images'>
             <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[0])} className='pdp-image' src={this.props.product.gallery[0]} alt="" />
-            <img style={{cursor: "pointer"}}  onClick={() => this.handleImage(this.props.product.gallery[1])} className='pdp-image' src={this.props.product.gallery[1]} alt="" />
-            <img style={{cursor: "pointer"}}  onClick={() => this.handleImage(this.props.product.gallery[2])} className='pdp-image' src={this.props.product.gallery[2]} alt="" />
+            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[1])} className='pdp-image' src={this.props.product.gallery[1]} alt="" />
+            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[2])} className='pdp-image' src={this.props.product.gallery[2]} alt="" />
         </div>
         <img className='main-pdp-image' src={this.state.image} alt="" />
         <div className='pdp-main'>
@@ -30,35 +30,30 @@ export default class ProductPage extends Component {
                     {this.props.product.attributes.map((att, i) => (
                         <div className='item-attributes' key={i}>
                             <h3 className='att-name'>{att.name + ":"}</h3>
-                            {att.name === "Size" && <div className='input' id={"group"+i}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group"+i} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "Size" && <div className='input' id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.size === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
-                            {att.name === "Color" && <div id={"group2"}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group2"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} style={{backgroundColor: `${value.displayValue}`}} ></label>
-                                </div>)}
+                            {att.name === "Color" && <div id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.color === value.displayValue ? "active" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span> 
+                                )}
                             </div>}
-                            {att.name === "Capacity" && <div id={"group3"}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group3"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "Capacity" && <div id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.capacity === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
-                            {att.name === "With USB 3 ports" && <div id={"group4"}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group4"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "With USB 3 ports" && <div id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.usb === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
-                            {att.name === "Touch ID in keyboard" && <div id={"group5"}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={"group5"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "Touch ID in keyboard" && <div id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.touch === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
                         </div>
                     ))}

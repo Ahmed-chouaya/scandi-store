@@ -27,6 +27,7 @@ export default class CartItem extends Component {
     }
 
   render() {
+      console.log(this.props.item.size)
     return (
         <div>
         <hr />
@@ -39,34 +40,29 @@ export default class CartItem extends Component {
                         <div className='item-attributes' key={i}>
                             <h3 className='att-name'>{att.name + ":"}</h3>
                             {att.name === "Size" && <div className='input' id={this.props.item.name + att.name}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAtt(att.name, value.displayValue, this.props.item)} className={`att-value ${this.props.item.size === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
                             {att.name === "Color" && <div id={this.props.item.name + att.name}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} style={{backgroundColor: `${value.displayValue}`}} ></label>
-                                </div>)}
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAtt(att.name, value.displayValue, this.props.item)} className={`att-value ${this.props.item.color === value.displayValue ? "active" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span> 
+                                )}
                             </div>}
                             {att.name === "Capacity" && <div id={this.props.item.name + att.name}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAtt(att.name, value.displayValue, this.props.item)} className={`att-value ${this.props.item.capacity === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
                             {att.name === "With USB 3 ports" && <div id={this.props.item.name + att.name}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAtt(att.name, value.displayValue, this.props.item)} className={`att-value ${this.props.item.usb === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
                             {att.name === "Touch ID in keyboard" && <div id={this.props.item.name + att.name}>
-                                {att.items.map((value , id) => <div key={id} className='input' >
-                                    <input className={att.name} value={value} name={this.props.item.name + att.name} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                                {att.items.map((value , id) => 
+                                    <span onClick={() => this.context.handleAtt(att.name, value.displayValue, this.props.item)} className={`att-value ${this.props.item.touch === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
                             </div>}
                         </div>
                     ))}

@@ -19,34 +19,19 @@ export default class MiniCart extends Component {
               <div className='mini-item-attributes' key={i}>
                             <h3 className='mini-att-name'>{att.name + ":"}</h3>
                             {att.name === "Size" && <div className='input-mini' id={"group"+i}>
-                                {att.items.map((value , id) => <div key={id} className='input-mini' >
-                                    <input className={att.name} value={value} name={"group"+i} id={value+id} type="radio" />
-                                    <label style={{width: "20px", height: "20px"}} className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                                {att.items.map((value , id) => <div className='input-mini'><span onClick={() => this.context.handleAtt(att.name, value.displayValue, item)} className={`mini-att-value ${item.size === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div>)}
                             </div>}
-                            {att.name === "Color" && <div id={"group2"}>
-                                {att.items.map((value , id) => <div key={id} className='input-mini' >
-                                    <input className={att.name} value={value} name={"group2"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} style={{backgroundColor: `${value.displayValue}`}} ></label>
-                                </div>)}
+                            {att.name === "Color" && <div className='input-mini' id={"group2"}>
+                                {att.items.map((value , id) => <div className='input-mini'><span onClick={() => this.context.handleAtt(att.name, value.displayValue, item)} className={`mini-att-value ${item.color === value.displayValue ? "active" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span></div>)}
                             </div>}
-                            {att.name === "Capacity" && <div id={"group3"}>
-                                {att.items.map((value , id) => <div key={id} className='input-mini' >
-                                    <input className={att.name} value={value} name={"group3"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "Capacity" && <div className='input-mini' id={"group3"}>
+                                {att.items.map((value , id) => <div className='input-mini'><span onClick={() => this.context.handleAtt(att.name, value.displayValue, item)} className={`mini-att-value ${item.capacity === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div> )}
                             </div>}
-                            {att.name === "With USB 3 ports" && <div id={"group4"}>
-                                {att.items.map((value , id) => <div key={id} className='input-mini' >
-                                    <input className={att.name} value={value} name={"group4"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "With USB 3 ports" && <div className='input-mini' id={"group4"}>
+                                {att.items.map((value , id) => <div className='input-mini'><span onClick={() => this.context.handleAtt(att.name, value.displayValue, item)} className={`mini-att-value ${item.usb === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div>)}
                             </div>}
-                            {att.name === "Touch ID in keyboard" && <div id={"group5"}>
-                                {att.items.map((value , id) => <div key={id} className='input-mini' >
-                                    <input className={att.name} value={value} name={"group5"} id={value+id} type="radio" />
-                                    <label className={att.name + "Label"} htmlFor={value+id} >{value.displayValue}</label>
-                                </div>)}
+                            {att.name === "Touch ID in keyboard" && <div className='input-mini' id={"group5"}>
+                                {att.items.map((value , id) => <div className='input-mini'><span onClick={() => this.context.handleAtt(att.name, value.displayValue, item)} className={`mini-att-value ${item.touch === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div>)}
                             </div>}
                         </div>
             ))}

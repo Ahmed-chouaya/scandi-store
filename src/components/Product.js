@@ -36,9 +36,28 @@ export default class Product extends Component {
     this.context.getTotal()
   }
 
+  removeDuplicates(arr) {
+    return arr.filter((item,
+        index) => arr.indexOf(item) === index);
+}
+
+  handleProduct() {
+    let arr = []
+    this.state.product.map(pro => arr =[...this.state.product, {
+      ...pro,
+      size: "",
+      color: "",
+      capacity: "",
+      usb: "",
+      touch: ""
+    }])
+    let arr2 = arr.slice(0, -1)
+    this.state.product = this.removeDuplicates(arr2)
+  }
+
 
   render() {
-    console.log(this.context.cartTotalQty)
+    this.handleProduct()
     return (
       <div key={this.state.counter} className='product'>
         <h1 className='cat-name'>{this.state.category}</h1>
