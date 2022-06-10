@@ -20,7 +20,9 @@ class Navbar extends Component {
           <ul className='nav-categories'>
               {this.context.cat.map(cat => (<li key={cat.name} ><Link className='nav-link' key={cat.name} to={cat.name}>{cat.name.toUpperCase()}</Link></li>))}
           </ul>
-          <img className='logo' src="./Group.svg" alt="" />
+          <Link to={"/"}>
+            <img className='logo' src="./Group.svg" alt="" />  
+          </Link>
           <div className='nav-cart'>
             <select value={this.context.currency} onChange={this.context.handleCurrency}>
                 {this.context.currencies.map(currency => <option key={currency.label} value={currency.label}>{`${currency.symbol} ${currency.label}`}</option>)}

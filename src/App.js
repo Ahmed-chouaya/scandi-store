@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import ProductPage from "./components/ProductPage"
 import { Context } from "./Context";
 import MiniCart from "./components/MiniCart";
+import Home from "./components/Home";
 
 class App extends Component {
   constructor(props){
@@ -34,6 +35,7 @@ handleCategory = (catt) => {
         {this.context.toglleMiniCart && <MiniCart />}
         <div className={this.context.toglleMiniCart ? "opacity" : ""}>
         <Routes >
+          <Route path="/" element={<Home />}/>
           <Route path="all" element={<All handleCategory={this.handleCategory}/>} />
           <Route path="tech" element={<Tech handleCategory={this.handleCategory}/>} />
           <Route path="clothes" element={<Clothes handleCategory={this.handleCategory}/>} />
