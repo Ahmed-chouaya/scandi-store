@@ -35,6 +35,7 @@ const client = new ApolloClient({
               gallery
               category
               attributes {
+                type
                 name
                 items {
                   displayValue

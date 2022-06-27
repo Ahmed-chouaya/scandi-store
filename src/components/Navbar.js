@@ -1,13 +1,35 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom";
 import { Context } from '../Context';
+import MiniCart from './MiniCart';
 
 
 class Navbar extends Component {
   constructor(props){
     super(props)
     this.state = {
-      qty: 0
+      activeCurr: false
+    }
+    this.wrapperRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  toggleActiveCurr() {
+    this.setState({activeCurr: !this.state.activeCurr})
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.setState({activeCurr: false});
+      this.context.closeMiniCart()
     }
   }
 
@@ -18,17 +40,27 @@ class Navbar extends Component {
     return (
       <div className='nav-containner'>
           <ul className='nav-categories'>
-              {this.context.cat.map(cat => (<li key={cat.name} ><Link className='nav-link' key={cat.name} to={cat.name}>{cat.name.toUpperCase()}</Link></li>))}
+              {this.context.cat.map(cat => (<li key={cat.name} ><Link onClick={() => this.props.handleCategory(cat.name)} className='nav-link' key={cat.name} to={`/${cat.name}`}>{cat.name.toUpperCase()}</Link></li>))}
           </ul>
           <Link to={"/"}>
             <img className='logo' src="./Group.svg" alt="" />  
           </Link>
-          <div className='nav-cart'>
-            <select value={this.context.currency} onChange={this.context.handleCurrency}>
-                {this.context.currencies.map(currency => <option key={currency.label} value={currency.label}>{`${currency.symbol} ${currency.label}`}</option>)}
-            </select>
-            <img onClick={() => this.context.handleMiniCart()} className='cart' src="./Vector.svg" alt="" />
-            <h1 className='navbar-qty'>{this.context.cartTotalQty}</h1>
+          <div ref={this.wrapperRef} className='nav-cart'>
+            <div className='curr-changer'>
+              <div className='select' onClick={() => this.toggleActiveCurr()}>{this.context.currency}
+                <img className='arrow-curr' src={this.state.activeCurr ? "/Vector(1).svg" : "/Vector(2).svg"} alt="" />
+              </div>
+                <div className='options'>
+                  {this.state.activeCurr && this.context.currencies.map(currency => <div className='option' key={currency.label} onClick={() => {
+                    this.context.handleCurrency(currency.symbol)
+                    this.setState({activeCurr: false})
+                    setTimeout(() => this.context.getTotal(), 10)
+                  }}>{`${currency.symbol} ${currency.label}`}</div>)}
+                </div>
+            </div>
+              <img onClick={() => this.context.handleMiniCart()} className='cart' src="./Vector.svg" alt="" />
+              <h1 className='navbar-qty'>{this.context.cartTotalQty}</h1>
+              {this.context.toglleMiniCart && <MiniCart /> }
           </div>
       </div>
     )

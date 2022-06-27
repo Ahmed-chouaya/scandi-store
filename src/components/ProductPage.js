@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Context } from '../Context'
+import { Markup } from 'interweave';
 
 export default class ProductPage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            image: this.props.product.gallery[0]
+            image: this.props.product.gallery[0],
+            attr:{}
         }
         this.handleImage = this.handleImage.bind(this)
     }
@@ -14,45 +16,43 @@ export default class ProductPage extends Component {
         this.setState({image: img})
     }
 
+    handleAtt(name, value){
+        this.setState(prev => ({
+            ...prev,
+            attr:{...this.state.attr, [name]: value}
+        }))
+        setTimeout(() => this.context.handleAttPDP(this.state.attr, this.props.product), 10)
+    }
+
 
   render() {
     return (
-      <div className='pdp'>
+        <>
+      {this.props.product.inStock ? <div className='pdp'>
         <div className='pdp-images'>
-            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[0])} className='pdp-image' src={this.props.product.gallery[0]} alt="" />
-            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[1])} className='pdp-image' src={this.props.product.gallery[1]} alt="" />
-            <img style={{cursor: "pointer"}} onClick={() => this.handleImage(this.props.product.gallery[2])} className='pdp-image' src={this.props.product.gallery[2]} alt="" />
+            {this.props.product.gallery.map((image, i) =>  <img key={i} style={{cursor: "pointer"}} onClick={() => this.handleImage(image)} className='pdp-image' src={image} alt="" />)}
         </div>
-        <img className='main-pdp-image' src={this.state.image} alt="" />
+        <div className='pdp--image'>
+            <img className='main-pdp-image' src={this.state.image} alt="" />
+        </div>
         <div className='pdp-main'>
         <h1 className='brand-name'>{this.props.product.brand}</h1>
                     <h1 className='item-name'>{this.props.product.name}</h1>
                     {this.props.product.attributes.map((att, i) => (
                         <div className='item-attributes' key={i}>
                             <h3 className='att-name'>{att.name + ":"}</h3>
-                            {att.name === "Size" && <div className='input' id={this.props.product.name + att.name}>
+                            {att.type === "text" && <div className='input'>
                                 {att.items.map((value , id) => 
-                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.size === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                    <span onClick={() => {
+                                        this.handleAtt(att.name, value.displayValue)
+                                    }} className={`att-value ${this.props.product.attr[att.name] === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
                                 )}
                             </div>}
-                            {att.name === "Color" && <div id={this.props.product.name + att.name}>
+                            {att.type === "swatch" && <div id={this.props.product.name + att.name}>
                                 {att.items.map((value , id) => 
-                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.color === value.displayValue ? "active" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span> 
-                                )}
-                            </div>}
-                            {att.name === "Capacity" && <div id={this.props.product.name + att.name}>
-                                {att.items.map((value , id) => 
-                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.capacity === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
-                                )}
-                            </div>}
-                            {att.name === "With USB 3 ports" && <div id={this.props.product.name + att.name}>
-                                {att.items.map((value , id) => 
-                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.usb === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
-                                )}
-                            </div>}
-                            {att.name === "Touch ID in keyboard" && <div id={this.props.product.name + att.name}>
-                                {att.items.map((value , id) => 
-                                    <span onClick={() => this.context.handleAttPDP(att.name, value.displayValue, this.props.product)} className={`att-value ${this.props.product.touch === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                    <span onClick={() => {
+                                        this.handleAtt(att.name, value.displayValue)
+                                    }} className={`att-value ${this.props.product.attr[att.name] === value.displayValue ? "active-swatch" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span> 
                                 )}
                             </div>}
                         </div>
@@ -61,9 +61,47 @@ export default class ProductPage extends Component {
                     <h1 className='pdp-price'>Price:</h1>
                     <h1 className='item-price'>{this.props.product.prices[this.context.num].currency.symbol} {this.props.product.prices[this.context.num].amount}</h1>
                     <button onClick={() => this.context.handleCartItem(this.props.product)} className='pdp-button'>ADD TO CART</button>
-                    <p className='pdp-add-to-cart' dangerouslySetInnerHTML={{__html: this.props.product.description}}></p>
+                    <div className='pdp-add-to-cart'>
+                        <Markup content={this.props.product.description} />
+                    </div>
         </div>
-      </div>
+      </div> :
+      
+       <div className='pdp'>
+        <div className='pdp-images'>
+            {this.props.product.gallery.map((image, i) =>  <img key={i} style={{cursor: "pointer"}} onClick={() => this.handleImage(image)} className='pdp-image' src={image} alt="" />)}
+        </div>
+        <div className='pdp--image'>
+            <img className='main-pdp-image' src={this.state.image} alt="" />
+        </div>
+        <div className='pdp-main'>
+        <h1 className='brand-name'>{this.props.product.brand}</h1>
+                    <h1 className='item-name'>{this.props.product.name}</h1>
+                    {this.props.product.attributes.map((att, i) => (
+                        <div className='item-attributes' key={i}>
+                            <h3 className='att-name'>{att.name + ":"}</h3>
+                            {att.type === "text" && <div className='input'>
+                                {att.items.map((value , id) => 
+                                    <span style={{cursor: "not-allowed"}} className={`att-value ${this.props.product.attr[att.name] === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span> 
+                                )}
+                            </div>}
+                            {att.type === "swatch" && <div id={this.props.product.name + att.name}>
+                                {att.items.map((value , id) => 
+                                    <span className={`att-value ${this.props.product.attr[att.name] === value.displayValue ? "active" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`, cursor: "not-allowed"}}></span> 
+                                )}
+                            </div>}
+                        </div>
+                    ))}
+
+                    <h1 className='pdp-price'>Price:</h1>
+                    <h1 className='item-price'>{this.props.product.prices[this.context.num].currency.symbol} {this.props.product.prices[this.context.num].amount}</h1>
+                    <button style={{cursor: "not-allowed"}} className='pdp-button'>OUT OF STOCK</button>
+                    <div className='pdp-add-to-cart'>
+                        <Markup content={this.props.product.description} />
+                    </div>
+        </div>
+      </div>}
+      </>
     )
   }
 }

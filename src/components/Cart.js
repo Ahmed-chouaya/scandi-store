@@ -10,7 +10,7 @@ export default class Cart extends Component {
       this.context.cartTotalQty !== 0 ? <div>
           <h1 className='cart-name'>Cart</h1>
           <div className="cart-page">
-              {this.context.cartItem.map(item => item.cartQty !== 0 && <CartItem item={item} key={item.id}/>)}
+              {this.context.cartItem.map(item => <CartItem item={item} key={item.id}/>)}
               <hr />
               <div className='order'>
                 <h1 className='tax'>Tax 21%: <b>{this.context.currencies[this.context.num].symbol}{tax}</b></h1>

@@ -21,43 +21,52 @@ export default class Product extends Component {
   forceUpdate = () => {
     this.setState(prev => ({
       ...prev,
-      counter: prev.counter + 1 
+      counter: prev.counter + 1
     }))
   }
   
   componentDidMount() {
-    const cat = this.props.cat
-    Fetch_CATEGORIES(cat)
-    .then(res => this.setState(prev => ({
-      ...prev,
-      product: res.data.category.products,
-      category: res.data.category.name
-    })))
-    this.context.getTotal()
+    this.catchData()
   }
 
+  componentDidUpdate(prevProps,prevState) {
+    if(prevProps.cat !== this.props.cat) {
+      this.catchData()
+    }
+  }
+
+  catchData() {
+    const cat = this.props.cat
+    Fetch_CATEGORIES(cat)
+    .then(res => {
+      this.handleProduct(res.data.category.products)
+      this.setState(prev => ({
+      ...prev,
+      category: res.data.category.name
+    }))
+  })
+    this.context.getTotal()
+  }
+ 
   removeDuplicates(arr) {
     return arr.filter((item,
         index) => arr.indexOf(item) === index);
-}
-
-  handleProduct() {
-    let arr = []
-    this.state.product.map(pro => arr =[...this.state.product, {
-      ...pro,
-      size: "",
-      color: "",
-      capacity: "",
-      usb: "",
-      touch: ""
-    }])
-    let arr2 = arr.slice(0, -1)
-    this.state.product = this.removeDuplicates(arr2)
   }
 
+  handleProduct(prod) {
+    let arr = []
+    prod.map(pro => {
+      arr.push({...pro, attr:{}})
+      this.context.handleProductPDP({...pro, attr:{}})
+      return arr
+    })
+    this.setState(prev => ({
+      ...prev,
+      product: arr
+    }))
+  }
 
   render() {
-    this.handleProduct()
     return (
       <div key={this.state.counter} className='product'>
         <h1 className='cat-name'>{this.state.category}</h1>
