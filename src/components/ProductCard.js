@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Context } from '../Context'
+import PopUp from './PopUp'
 
 
 export default class ProductCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            hovered: false
+            hovered: false,
+            toggleAttri: false
         }
+        this.toggleAttri = this.toggleAttri.bind(this)
     }
 
 
@@ -16,6 +19,12 @@ export default class ProductCard extends Component {
       this.context.handleProductPDP(this.props.product)
     }
     
+    toggleAttri() {
+      this.setState(prev => ({
+        ...prev,
+        toggleAttri: !prev.toggleAttri
+      }))
+    }
 
   render() {
     const stockOut = this.props.inStock ? "inStock" : "outStock"
@@ -28,9 +37,7 @@ export default class ProductCard extends Component {
       >
         
           <Link
-            style={{ textDecoration: "none" }}
             to={`/pdp/${this.props.product.id}`}
-            onClick={() => this.context.handlePDPproduct(this.props.product)}
           >
             <div className="card-ele">
               <div className="cardImage">
@@ -48,7 +55,8 @@ export default class ProductCard extends Component {
             </div>
           </Link>
          {this.props.inStock &&
-          this.state.hovered && (
+          this.state.hovered && 
+          this.props.product.attributes.length === Object.keys(this.props.product.attr).length ?
             <img
               key={this.props.product.id}
               onClick={() => {
@@ -57,8 +65,20 @@ export default class ProductCard extends Component {
               className="add-to-cart"
               src="CircleIcon.svg"
               alt=""
+            /> :
+            this.props.inStock &&
+            this.state.hovered && 
+            <img
+              key={this.props.product.id}
+              onClick={() => {
+                this.toggleAttri();
+              }}
+              className="add-to-cart"
+              src="CircleIcon.svg"
+              alt=""
             />
-          )}
+          }
+          {this.state.toggleAttri && <PopUp handleToggleAttri={this.toggleAttri} toggleAttri={this.state.toggleAttri} product={this.props.product}/>}
       </div>
     );
   }

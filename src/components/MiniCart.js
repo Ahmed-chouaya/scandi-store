@@ -19,7 +19,7 @@ export default class MiniCart extends Component {
             <h1 className='mini-total-value'>{this.context.currencies[this.context.num].symbol}{total}</h1>
           </div>
           <div className='mini-buttons'>
-              <button className='mini-view'><Link onClick={() => this.context.handleMiniCart()} style={{textDecoration: "none" , color:"#1D1F22", width: "140px", height: "43px"}} to={"cart"}>view bag</Link></button>
+              <button className='mini-view'><Link className='mini-view-link' onClick={() => this.context.handleMiniCart()} to={"cart"}>view bag</Link></button>
             <button onClick={() => this.context.handleOrder()} className='mini-check'>check out</button>
           </div>
         </div>

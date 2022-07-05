@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import {Fetch_CATEGORIES_LINKS, Fetch_CURRENCY } from "./components/queries"
+import {Fetch_CATEGORIES, Fetch_CATEGORIES_LINKS, Fetch_CURRENCY } from "./components/queries"
 const Context = React.createContext()
  
 class ContextProvider extends Component {
@@ -8,14 +8,13 @@ class ContextProvider extends Component {
         this.state = {
           cat: [],
           currencies: [],
-          currency: "$",
+          currency: "",
           num: 0,
           cartItem: [],
           cartTotalQty: 0,
           cartTotalAmount: 0,
-          product:JSON.parse(localStorage.getItem('Pro')) || [],
-          toglleMiniCart: false,
-          prod:JSON.parse(localStorage.getItem('Prod')) || {}
+          product: [],
+          toglleMiniCart: false
         }
         this.handleCurrency = this.handleCurrency.bind(this)
         this.priceArr = this.priceArr.bind(this)
@@ -29,17 +28,7 @@ class ContextProvider extends Component {
         this.handleProductPDP = this.handleProductPDP.bind(this)  
         this.closeMiniCart = this.closeMiniCart.bind(this)
         this.plusItem = this.plusItem.bind(this)
-        this.handlePDPproduct = this.handlePDPproduct.bind(this)
         this.fastAddToCart = this.fastAddToCart.bind(this)
-    }
-
-
-    handlePDPproduct(item){
-        localStorage.setItem('Prod',  JSON.stringify(item));
-        this.setState(prev => ({
-            ...prev,
-            prod: item
-        }))
     }
 
 
@@ -58,8 +47,6 @@ class ContextProvider extends Component {
       }
 
     handleOrder() {
-        const itemIndex = this.state.cartItem.findIndex((itm) => JSON.stringify(itm.attr) === JSON.stringify({}));
-        if(itemIndex < 0) {
             this.setState(prev => ({
                 ...prev,
                 cartItem: [],
@@ -67,9 +54,6 @@ class ContextProvider extends Component {
                 cartTotalAmount: 0,
                 toglleMiniCart: false
             }))
-        }else {
-            alert("please fill all the attributes")
-        }
     }
 
    handleProductPDP(prod) {
@@ -77,7 +61,6 @@ class ContextProvider extends Component {
         const pro = this.state.product
         if(itemIndex < 0) {
             pro.push(prod)
-            localStorage.setItem('Pro',  JSON.stringify(pro));
         this.setState(prev => ({
             ...prev,
             product: pro
@@ -160,7 +143,7 @@ class ContextProvider extends Component {
     }
     
     handleCartItem(item) {
-        const itemIndex = this.state.cartItem.findIndex((itm) => JSON.stringify(itm.attr) === JSON.stringify(item.attr));
+        const itemIndex = this.state.cartItem.findIndex((itm) => itm.attr === item.attr);
         if (itemIndex >= 0) {
             let items = this.state.cartItem
             items[itemIndex].cartQty += 1
@@ -204,25 +187,12 @@ class ContextProvider extends Component {
     }
 
     priceArr(cur) {
-       switch(cur) {
-            case "$":
-                this.setState(prev => ({...prev,num:0}))
-            break;
-            case "£":
-                this.setState(prev => ({...prev,num:1}))
-            break;
-            case "A$":
-                this.setState(prev => ({...prev,num:2}))
-            break;
-            case "¥":
-                this.setState(prev => ({...prev,num:3}))
-            break;
-            case "₽":
-                this.setState(prev => ({...prev,num:4}))
-            break;
-            default:
-                this.setState(prev => ({...prev,num:0}))
-       }
+       this.state.currencies.map(curr => {
+        if(cur === curr.symbol) {
+            this.setState(prev => ({...prev, num:this.state.currencies.indexOf(curr)}))
+         }
+         return console.log("currency changed")
+       })
       }
 
     handleCurrency(e) {
@@ -237,17 +207,36 @@ class ContextProvider extends Component {
     
       componentDidMount() {
         Fetch_CATEGORIES_LINKS
-        .then(r => this.setState(prev => ({
-            ...prev,
-            cat:r.data.categories
-        })))
+        .then(r => {
+            this.setState(prev => ({
+                ...prev,
+                cat:r.data.categories
+            }))
+            Fetch_CATEGORIES(r.data.categories[0].name)
+            .then(pro => this.handlePro(pro.data.category.products))
+        })
         Fetch_CURRENCY
         .then(r => this.setState(prev => ({
             ...prev,
-            currencies: r.data.currencies
+            currencies: r.data.currencies,
+            currency: r.data.currencies[0].symbol
         })))
       }
+
+      handlePro(prod) {
+        let arr = []
+        prod.map(pro => {
+          arr.push({...pro, attr:{}})
+          return arr
+        })
+        this.setState(prev => ({
+          ...prev,
+          product: arr
+        }))
+      }
+
     render(){
+        console.log(this.state.product)
         return(
             <Context.Provider value={{
                 cat: this.state.cat,
@@ -271,7 +260,6 @@ class ContextProvider extends Component {
                 closeMiniCart: this.closeMiniCart,
                 plusItem: this.plusItem,
                 handlePDPproduct: this.handlePDPproduct,
-                prod: this.state.prod,
                 fastAddToCart: this.fastAddToCart
             }}>
                 {this.props.children}

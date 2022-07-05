@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { ContextProvider } from './Context';
 import { BrowserRouter } from "react-router-dom";
+import ScrollToTop from './ScrollToTop';
 
 
 
@@ -12,6 +13,7 @@ root.render(
   <React.StrictMode>
     <ContextProvider>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
     </ContextProvider>

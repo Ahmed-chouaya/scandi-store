@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
+import { useParams } from 'react-router';
 import { Context } from '../Context';
 import ProductCard from './ProductCard'
 import { Fetch_CATEGORIES } from './queries';
 
-export default class Product extends Component {
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+
+class Product extends Component {
 
   constructor(props) {
     super(props);
@@ -30,13 +35,13 @@ export default class Product extends Component {
   }
 
   componentDidUpdate(prevProps,prevState) {
-    if(prevProps.cat !== this.props.cat) {
+    if(prevProps.params.cat !== this.props.params.cat) {
       this.catchData()
     }
   }
 
   catchData() {
-    const cat = this.props.cat
+    const cat = this.props.params.cat
     Fetch_CATEGORIES(cat)
     .then(res => {
       this.handleProduct(res.data.category.products)
@@ -77,5 +82,7 @@ export default class Product extends Component {
     )
   }
 }
+
+export default withParams(Product)
 
 Product.contextType = Context

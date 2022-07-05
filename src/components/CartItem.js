@@ -67,7 +67,7 @@ export default class CartItem extends Component {
                         <h1 className='counter'>{this.props.item.cartQty}</h1>
                         <button onClick={() => this.context.minusItem(this.props.item)} className='cart-button'>-</button>
                     </div>
-                        <img className='cart-page-image' style={{width: "350px"}} src={this.state.photo[this.state.current]} alt="" />
+                        <img className='cart-page-image' src={this.state.photo[this.state.current]} alt="" />
                     {this.leng > 1 && <button onClick={() => this.prevSlide()} className='left-arrow'><img src="/arrow.svg" alt="" className='arrow--left'/></button>}
                     {this.leng > 1 &&<button onClick={() => this.nextSlide()} className='right-arrow'><img src="/arrow2.svg" alt="" className='arrow--right' /></button>}
                 </div>
