@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Context } from '../Context'
 import { Markup } from 'interweave';
 import { useParams } from 'react-router';
-import { Fetch_CATEGORIES, Fetch_CATEGORIES_LINKS } from './queries';
 import Loading from './Loading';
 
 function withParams(Component) {
@@ -40,23 +39,17 @@ class ProductPage extends Component {
     }
 
     componentDidMount() {
-        Fetch_CATEGORIES_LINKS
-        .then(r => {
-            Fetch_CATEGORIES(r.data.categories[0].name)
-            .then(pro => {
-                const index =  pro.data.category.products.findIndex(item => item.id === this.props.params.id)
+        this.context.PDPCat(this.props.params.cat)
+        setTimeout( () => {
+            const index =  this.context.product.findIndex(item => item.id === this.props.params.id)
+            if(this.context.product.length > 0) {
                 this.setState(prev => ({
                     ...prev,
-                    product: {...pro.data.category.products[index], attr: {}},
-                    image: pro.data.category.products[index].gallery[0]
+                    loading: true,
+                    product: {...this.context.product[index], attr: {}},
+                    image: this.context.product[index].gallery[0]
                 }))
-            })
-        })
-        setTimeout(() => {
-            this.setState(prev => ({
-                ...prev,
-                loading: true
-            }))
+            }
         }, 800)
     }
 

@@ -59,12 +59,12 @@ export default class PopUp extends Component {
                     <h1 className='popUp-att-name' >{att.name}:</h1>
                     {att.type === "text" && <div >
                         {att.items.map((value , id) => 
-                            <div className='input'><span onClick={() => this.handleAtt(att.name, value.displayValue)} className={`att-value ${this.state.product.attr[att.name] === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div>
+                            <div key={value + id} className='input'><span onClick={() => this.handleAtt(att.name, value.displayValue)} className={`att-value ${this.state.product.attr[att.name] === value.displayValue ? "active" : ""}`} key={id}>{value.displayValue}</span></div>
                         )}
                     </div>}
                     {att.type === "swatch" && <div>
                         {att.items.map((value , id) => 
-                            <div className='input'><span onClick={() => this.handleAtt(att.name, value.displayValue)} className={`att-value ${this.state.product.attr[att.name] === value.displayValue ? "active-swatch" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span></div>
+                            <div key={value + id} className='input'><span onClick={() => this.handleAtt(att.name, value.displayValue)} className={`att-value ${this.state.product.attr[att.name] === value.displayValue ? "active-swatch" : ""}`} key={id} style={{backgroundColor: `${value.displayValue}`}}></span></div>
                         )}
                     </div>}
                 </div>))}

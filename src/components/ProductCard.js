@@ -13,11 +13,6 @@ export default class ProductCard extends Component {
         }
         this.toggleAttri = this.toggleAttri.bind(this)
     }
-
-
-    componentDidMount() {
-      this.context.handleProductPDP(this.props.product)
-    }
     
     toggleAttri() {
       this.setState(prev => ({
@@ -37,7 +32,7 @@ export default class ProductCard extends Component {
       >
         
           <Link
-            to={`/pdp/${this.props.product.id}`}
+            to={`/${this.props.product.category}/${this.props.product.id}`}
           >
             <div className="card-ele">
               <div className="cardImage">

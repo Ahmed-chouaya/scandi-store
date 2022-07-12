@@ -14,7 +14,8 @@ class ContextProvider extends Component {
           cartTotalQty: 0,
           cartTotalAmount: 0,
           product: [],
-          toglleMiniCart: false
+          toglleMiniCart: false,
+          category: null
         }
         this.handleCurrency = this.handleCurrency.bind(this)
         this.priceArr = this.priceArr.bind(this)
@@ -29,6 +30,7 @@ class ContextProvider extends Component {
         this.closeMiniCart = this.closeMiniCart.bind(this)
         this.plusItem = this.plusItem.bind(this)
         this.fastAddToCart = this.fastAddToCart.bind(this)
+        this.PDPCat = this.PDPCat.bind(this)
     }
 
 
@@ -212,8 +214,6 @@ class ContextProvider extends Component {
                 ...prev,
                 cat:r.data.categories
             }))
-            Fetch_CATEGORIES(r.data.categories[0].name)
-            .then(pro => this.handlePro(pro.data.category.products))
         })
         Fetch_CURRENCY
         .then(r => this.setState(prev => ({
@@ -221,6 +221,20 @@ class ContextProvider extends Component {
             currencies: r.data.currencies,
             currency: r.data.currencies[0].symbol
         })))
+        setTimeout(() => {
+            if(this.state.category !== null) {
+            Fetch_CATEGORIES(this.state.category)
+            .then(r => {
+            this.handlePro(r.data.category.products)
+            })}
+    }, 10)
+      }
+
+      PDPCat(cat) {
+        this.setState(prev => ({
+            ...prev,
+            category: cat
+        }))
       }
 
       handlePro(prod) {
@@ -260,7 +274,8 @@ class ContextProvider extends Component {
                 closeMiniCart: this.closeMiniCart,
                 plusItem: this.plusItem,
                 handlePDPproduct: this.handlePDPproduct,
-                fastAddToCart: this.fastAddToCart
+                fastAddToCart: this.fastAddToCart,
+                PDPCat: this.PDPCat
             }}>
                 {this.props.children}
             </Context.Provider>

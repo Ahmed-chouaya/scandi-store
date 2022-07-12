@@ -52,11 +52,6 @@ class Product extends Component {
   })
     this.context.getTotal()
   }
- 
-  removeDuplicates(arr) {
-    return arr.filter((item,
-        index) => arr.indexOf(item) === index);
-  }
 
   handleProduct(prod) {
     let arr = []
