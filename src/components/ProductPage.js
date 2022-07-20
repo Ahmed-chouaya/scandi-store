@@ -39,7 +39,6 @@ class ProductPage extends Component {
     }
 
     componentDidMount() {
-        this.context.PDPCat(this.props.params.cat)
         setTimeout( () => {
             const index =  this.context.product.findIndex(item => item.id === this.props.params.id)
             if(this.context.product.length > 0) {

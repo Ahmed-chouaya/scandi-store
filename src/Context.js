@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import {Fetch_CATEGORIES, Fetch_CATEGORIES_LINKS, Fetch_CURRENCY } from "./components/queries"
+
+
 const Context = React.createContext()
  
 class ContextProvider extends Component {
@@ -15,7 +17,7 @@ class ContextProvider extends Component {
           cartTotalAmount: 0,
           product: [],
           toglleMiniCart: false,
-          category: null
+          category: ""
         }
         this.handleCurrency = this.handleCurrency.bind(this)
         this.priceArr = this.priceArr.bind(this)
@@ -222,11 +224,10 @@ class ContextProvider extends Component {
             currency: r.data.currencies[0].symbol
         })))
         setTimeout(() => {
-            if(this.state.category !== null) {
             Fetch_CATEGORIES(this.state.category)
             .then(r => {
             this.handlePro(r.data.category.products)
-            })}
+            })
     }, 10)
       }
 

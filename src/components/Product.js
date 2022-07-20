@@ -31,6 +31,7 @@ class Product extends Component {
   }
   
   componentDidMount() {
+    this.context.PDPCat(this.props.params.cat)
     this.catchData()
   }
 
